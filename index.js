@@ -34,6 +34,11 @@ var httpProxyMiddleware = function (context, opts) {
         });
     }
 
+    // handle option.proxyRes for success callback
+    if (proxyOptions.proxyRes && typeof proxyOptions.proxyRes === 'function') {
+        proxy.on('proxyRes', proxyOptions.proxyRes);
+    }
+
     // handle error and close connection properly
     proxy.on('error', function (err, req, res) {
         handlers.proxyError(err, req, res, proxyOptions);
